@@ -42,7 +42,7 @@ def UserProfile(request, username):
 	page_number = request.GET.get('page')
 	posts_paginator = paginator.get_page(page_number)
 
-	template = loader.get_template('account/profile.html')
+	template = loader.get_template('profile.html')
 
 	context = {
 		'posts': posts_paginator,
