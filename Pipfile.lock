@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "162c70470c6d56d11821d0cbe62476a412784ba977be72e7f9d296e63429cb65"
+            "sha256": "78f0d89ea7f098d673e18f5a5e8f08465d8c8ca9488033b59f6b33e05a35dbc0"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -46,6 +46,14 @@
             "markers": "python_version < '3.9'",
             "version": "==0.2.1"
         },
+        "beautifulsoup4": {
+            "hashes": [
+                "sha256:58d5c3d29f5a36ffeb94f02f0d786cd53014cf9b3b3951d42e0080d8a9498d30",
+                "sha256:ad9aa55b65ef2808eb405f46cf74df7fcb7044d5cbc26487f96eb2ef2e436693"
+            ],
+            "markers": "python_version >= '3.6'",
+            "version": "==4.11.1"
+        },
         "django": {
             "hashes": [
                 "sha256:502ae42b6ab1b612c933fb50d5ff850facf858a4c212f76946ecd8ea5b3bf2d9",
@@ -53,6 +61,14 @@
             ],
             "index": "pypi",
             "version": "==4.0.5"
+        },
+        "django-bootstrap4": {
+            "hashes": [
+                "sha256:b6da4cb54682012ff8baa1a1e672ba30cbfae82fb3d74f4b341109074e8e239f",
+                "sha256:fc9984f7238fbcd330ec5111bf0435083caa7192b022eedd53bfa4128bee318f"
+            ],
+            "index": "pypi",
+            "version": "==22.1"
         },
         "django-crispy-forms": {
             "hashes": [
@@ -105,6 +121,14 @@
             ],
             "index": "pypi",
             "version": "==9.1.1"
+        },
+        "soupsieve": {
+            "hashes": [
+                "sha256:3b2503d3c7084a42b1ebd08116e5f81aadfaea95863628c80a3b774a11b7c759",
+                "sha256:fc53893b3da2c33de295667a0e19f078c14bf86544af307354de5fcf12a3f30d"
+            ],
+            "markers": "python_version >= '3.6'",
+            "version": "==2.3.2.post1"
         },
         "sqlparse": {
             "hashes": [
