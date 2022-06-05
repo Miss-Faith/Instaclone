@@ -5,11 +5,50 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save, post_delete
 from django.utils.text import slugify
 from django.urls import reverse
+from authe.models import *
 
 # Create your models here.
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
     return 'user_{0}/{1}'.format(instance.user.id, filename)
+
+class Tag(models.Model):
+	title = models.CharField(max_length=75, verbose_name='Tag')
+	slug = models.SlugField(null=False, unique=True)
+
+	class Meta:
+		verbose_name='Tag'
+		verbose_name_plural = 'Tags'
+
+	def get_absolute_url(self):
+		return reverse('tags', args=[self.slug])
+		
+	def __str__(self):
+		return self.title
+
+	def save(self, *args, **kwargs):
+		if not self.slug:
+			self.slug = slugify(self.title)
+		return super().save(*args, **kwargs)
+
+class PostFileContent(models.Model):
+	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='content_owner')
+	file = models.FileField(upload_to=user_directory_path)
+
+class Post(models.Model):
+	id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+	#content =  models.ManyToManyField(PostFileContent, related_name='contents')
+	caption = models.TextField(max_length=1500, verbose_name='Caption')
+	posted = models.DateTimeField(auto_now_add=True)
+	tags = models.ManyToManyField(Tag, related_name='tags')
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	likes = models.IntegerField(default=0)
+
+	def get_absolute_url(self):
+		return reverse('postdetails', args=[str(self.id)])
+
+	def __str__(self):
+		return str(self.id)
 
 class Comment(models.Model):
 	post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
@@ -37,55 +76,20 @@ class Comment(models.Model):
 post_save.connect(Comment.user_comment_post, sender=Comment)
 post_delete.connect(Comment.user_del_comment_post, sender=Comment)
 
-class Notification(models.Model):
-	NOTIFICATION_TYPES = ((1,'Like'),(2,'Comment'), (3,'Follow'))
+# class Notification(models.Model):
+# 	NOTIFICATION_TYPES = ((1,'Like'),(2,'Comment'), (3,'Follow'))
 
-	post = models.ForeignKey('post.Post', on_delete=models.CASCADE, related_name="noti_post", blank=True, null=True)
-	sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="noti_from_user")
-	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="noti_to_user")
-	notification_type = models.IntegerField(choices=NOTIFICATION_TYPES)
-	text_preview = models.CharField(max_length=90, blank=True)
-	date = models.DateTimeField(auto_now_add=True)
-	is_seen = models.BooleanField(default=False)
-
-class Tag(models.Model):
-	title = models.CharField(max_length=75, verbose_name='Tag')
-	slug = models.SlugField(null=False, unique=True)
-
-	class Meta:
-		verbose_name='Tag'
-		verbose_name_plural = 'Tags'
-
-	def get_absolute_url(self):
-		return reverse('tags', args=[self.slug])
-		
-	def __str__(self):
-		return self.title
-
-	def save(self, *args, **kwargs):
-		if not self.slug:
-			self.slug = slugify(self.title)
-		return super().save(*args, **kwargs)
+# 	post = models.ForeignKey('post.Post', on_delete=models.CASCADE, related_name="noti_post", blank=True, null=True)
+# 	sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="noti_from_user")
+# 	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="noti_to_user")
+# 	notification_type = models.IntegerField(choices=NOTIFICATION_TYPES)
+# 	text_preview = models.CharField(max_length=90, blank=True)
+# 	date = models.DateTimeField(auto_now_add=True)
+# 	is_seen = models.BooleanField(default=False)
 
 class PostFileContent(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='content_owner')
 	file = models.FileField(upload_to=user_directory_path)
-
-class Post(models.Model):
-	id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-	content =  models.ManyToManyField(PostFileContent, related_name='contents')
-	caption = models.TextField(max_length=1500, verbose_name='Caption')
-	posted = models.DateTimeField(auto_now_add=True)
-	tags = models.ManyToManyField(Tag, related_name='tags')
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
-	likes = models.IntegerField(default=0)
-
-	def get_absolute_url(self):
-		return reverse('postdetails', args=[str(self.id)])
-
-	def __str__(self):
-		return str(self.id)
-
 
 class Follow(models.Model):
 	follower = models.ForeignKey(User,on_delete=models.CASCADE, null=True, related_name='follower')
