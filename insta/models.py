@@ -2,6 +2,7 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import User
 
+from django.db.models.signals import post_save, post_delete
 from django.utils.text import slugify
 from django.urls import reverse
 
@@ -10,6 +11,42 @@ def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
     return 'user_{0}/{1}'.format(instance.user.id, filename)
 
+class Comment(models.Model):
+	post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	body = models.TextField()
+	date = models.DateTimeField(auto_now_add=True)
+
+	def user_comment_post(sender, instance, *args, **kwargs):
+		comment = instance
+		post = comment.post
+		text_preview = comment.body[:90]
+		sender = comment.user
+		notify = Notification(post=post, sender=sender, user=post.user, text_preview=text_preview ,notification_type=2)
+		notify.save()
+
+	def user_del_comment_post(sender, instance, *args, **kwargs):
+		like = instance
+		post = like.post
+		sender = like.user
+
+		notify = Notification.objects.filter(post=post, sender=sender, notification_type=2)
+		notify.delete()
+
+#Comment
+post_save.connect(Comment.user_comment_post, sender=Comment)
+post_delete.connect(Comment.user_del_comment_post, sender=Comment)
+
+class Notification(models.Model):
+	NOTIFICATION_TYPES = ((1,'Like'),(2,'Comment'), (3,'Follow'))
+
+	post = models.ForeignKey('post.Post', on_delete=models.CASCADE, related_name="noti_post", blank=True, null=True)
+	sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="noti_from_user")
+	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="noti_to_user")
+	notification_type = models.IntegerField(choices=NOTIFICATION_TYPES)
+	text_preview = models.CharField(max_length=90, blank=True)
+	date = models.DateTimeField(auto_now_add=True)
+	is_seen = models.BooleanField(default=False)
 
 class Tag(models.Model):
 	title = models.CharField(max_length=75, verbose_name='Tag')
@@ -42,7 +79,6 @@ class Post(models.Model):
 	tags = models.ManyToManyField(Tag, related_name='tags')
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	likes = models.IntegerField(default=0)
-
 
 	def get_absolute_url(self):
 		return reverse('postdetails', args=[str(self.id)])
@@ -102,3 +138,14 @@ class Likes(models.Model):
 
 		notify = Notification.objects.filter(post=post, sender=sender, notification_type=1)
 		notify.delete()
+
+#Stream
+post_save.connect(Stream.add_post, sender=Post)
+
+#Likes
+post_save.connect(Likes.user_liked_post, sender=Likes)
+post_delete.connect(Likes.user_unlike_post, sender=Likes)
+
+#Follow
+post_save.connect(Follow.user_follow, sender=Follow)
+post_delete.connect(Follow.user_unfollow, sender=Follow)
