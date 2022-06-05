@@ -42,7 +42,7 @@ def UserProfile(request, username):
 	page_number = request.GET.get('page')
 	posts_paginator = paginator.get_page(page_number)
 
-	template = loader.get_template('profile.html')
+	template = loader.get_template('account/profile.html')
 
 	context = {
 		'posts': posts_paginator,
@@ -73,32 +73,6 @@ def Signup(request):
 	}
 
 	return render(request, 'credentials/signup.html', context)
-
-@login_required
-def EditProfile(request):
-	user = request.user.id
-	profile = Profile.objects.get(user__id=user)
-	BASE_WIDTH = 400
-
-	if request.method == 'POST':
-		form = EditProfileForm(request.POST, request.FILES)
-		if form.is_valid():
-			profile.picture = form.cleaned_data.get('picture')
-			profile.first_name = form.cleaned_data.get('first_name')
-			profile.last_name = form.cleaned_data.get('last_name')
-			profile.location = form.cleaned_data.get('location')
-			profile.url = form.cleaned_data.get('url')
-			profile.profile_info = form.cleaned_data.get('profile_info')
-			profile.save()
-			return redirect('index')
-	else:
-		form = EditProfileForm()
-
-	context = {
-		'form':form,
-	}
-
-	return render(request, 'edit_profile.html', context)
 
 @login_required
 def follow(request, username, option):

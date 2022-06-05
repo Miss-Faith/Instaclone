@@ -28,7 +28,6 @@ class SignupForm(forms.ModelForm):
 	confirm_password = forms.CharField(widget=forms.PasswordInput(), required=True, label="Confirm your password.")
 
 	class Meta:
-
 		model = User
 		fields = ('username', 'email', 'password')
 
