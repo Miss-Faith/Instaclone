@@ -7,23 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Hello Bulma!</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   </head>
   <body>
 
   <nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <!-- <a class="navbar-item" href="">
-      <img src="{% static 'img/instagram_black.png' %}" width="64" height="64">
-    </a> -->
-
-    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
+    <div class="navbar-brand">
+      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
 
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
@@ -58,15 +53,15 @@
         Profile - <strong>{{ request.user }}</strong>
       </a>
 
-        <a href="{% url 'newpost' %}" class="navbar-item">
-          <i style="color: green;" class="material-icons">perm_media</i>
-          <strong>New Post</strong>
-        </a>
+      <a href="{% url 'newpost' %}" class="navbar-item">
+        <i style="color: green;" class="material-icons">perm_media</i>
+        <strong>New Post</strong>
+      </a>
 
-        <a href="#" class="navbar-item">
-          <i style="color: green;" class="material-icons">photo_filter</i>
-          <strong>New Story</strong>
-        </a>
+      <a href="#" class="navbar-item">
+        <i style="color: green;" class="material-icons">photo_filter</i>
+        <strong>New Story</strong>
+      </a>
 
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link">
@@ -84,13 +79,12 @@
             Report an issue
           </a>
           <hr class="navbar-divider">
-          <a href="#" class="navbar-item">
+          <a href="{% url 'login'%}" class="navbar-item">
             Log out
           </a>
         </div>
       </div>
     </div>
-
   </div>
 </nav>
 
