@@ -1,28 +1,40 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
-
 from .models import *
 from .forms import *
-
 from django.contrib.auth.decorators import login_required
-
 from django.urls import reverse
 
 # Create your views here.
+def signup(request):
+	if request.method == 'POST':
+		form = SignupForm(request.POST)
+		if form.is_valid():
+			username = form.cleaned_data.get('username')
+			email = form.cleaned_data.get('email')
+			password = form.cleaned_data.get('password')
+			User.objects.create_user(username=username, email=email, password=password)
+			return redirect('login')
+	else:
+		form = SignupForm()
+	
+	context = {
+		'form':form,
+	}
+
+	return render(request, 'signup.html', context)
+
+@login_required
 def index(request):
 	user = request.user
 	#posts = Stream.objects.filter(user=user)
 	
 	group_ids = []
-
 	# for post in posts:
 	# 	group_ids.append(post.post_id)
-		
 	# post_items = Post.objects.filter(id__in=group_ids).all().order_by('-posted')		
-
 	# template = loader.get_template('index.html')
-
 	# context = {
 	# 	'post_items': post_items,
 	# }
@@ -33,17 +45,13 @@ def PostDetails(request, post_id):
 	post = get_object_or_404(Post, id=post_id)
 	user = request.user
 	profile = Profile.objects.get(user=user)
-	favorited = False
 
 	#comment
 	comments = Comment.objects.filter(post=post).order_by('date')
 	
 	if request.user.is_authenticated:
 		profile = Profile.objects.get(user=user)
-		#For the color of the favorite button
 
-		if profile.favorites.filter(id=post_id).exists():
-			favorited = True
 
 	#Comments Form
 	if request.method == 'POST':
