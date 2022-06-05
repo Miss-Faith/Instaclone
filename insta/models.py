@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save, post_delete
 from django.utils.text import slugify
 from django.urls import reverse
-from authe.models import Profile
+
 
 # Create your models here.
 def user_directory_path(instance, filename):
