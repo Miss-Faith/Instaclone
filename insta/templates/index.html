@@ -7,7 +7,7 @@
 
   <div style="overflow-x: scroll;" class="columns">
 
-{% for story in stories %}
+<!-- {% for story in stories %}
   <div style="padding-right: 9px;">
     <a name="{{ story.id }}" class="showModal">
     <figure class="image is-128x128">
@@ -18,7 +18,7 @@
     </div>
     </a>
   </div>
-{% endfor %}
+{% endfor %} -->
 
   </div>
 
@@ -107,7 +107,7 @@
       {{ post_item.caption }}
       <p>{% for tag in post_item.tags.all %}<a href="{{ tag.get_absolute_url }}">#{{ tag }}</a>{% endfor %}</p>
       <br>
-      <strong><small>{{ post_item.posted | naturaltime }}</small></strong>
+      <strong><small>{{ post_item.posted }}</small></strong>
       </div>
     
 

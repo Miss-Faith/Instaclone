@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
 from django.db.models.signals import post_save
 
 # Create your models here.
@@ -14,7 +13,7 @@ def user_directory_path(instance, filename):
     	os.remove(full_path)
 
     return profile_pic_name
-		
+
 class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
 	first_name = models.CharField(max_length=50, null=True, blank=True)

@@ -11,12 +11,12 @@ from django.urls import reverse
 from authe.models import Profile
 
 # Create your views here.
-@login_required
+
 def index(request):
 	user = request.user
 	posts = Stream.objects.filter(user=user)
 
-	stories = StoryStream.objects.filter(user=user)
+	#stories = StoryStream.objects.filter(user=user)
 	group_ids = []
 
 	for post in posts:
@@ -28,7 +28,7 @@ def index(request):
 
 	context = {
 		'post_items': post_items,
-		'stories': stories,
+		#'stories': stories,
 
 	}
 

@@ -87,10 +87,6 @@ post_delete.connect(Comment.user_del_comment_post, sender=Comment)
 # 	date = models.DateTimeField(auto_now_add=True)
 # 	is_seen = models.BooleanField(default=False)
 
-class PostFileContent(models.Model):
-	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='content_owner')
-	file = models.FileField(upload_to=user_directory_path)
-
 class Follow(models.Model):
 	follower = models.ForeignKey(User,on_delete=models.CASCADE, null=True, related_name='follower')
 	following = models.ForeignKey(User,on_delete=models.CASCADE, null=True, related_name='following')

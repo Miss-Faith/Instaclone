@@ -28,13 +28,13 @@
             <form method="post" action="" role="form">
               {% csrf_token %}
               <div >
-                <input type="text" placeholder="Phone number, username, or email" width="88">
+                <input type="text" placeholder="Phone number, username, or email" width="88" value ={{form}}>
               </div>
               <div class="col">
                 <input type="text" placeholder="Password">
               </div>
               <div class="col">
-                <button class="btn btn-primary" type="submit"> Log In</button>
+                <button class="btn btn-primary" type="submit" value="login"> Log In</button>
               </div>
             </form>
     
