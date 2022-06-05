@@ -15,7 +15,6 @@ def index(request):
 	user = request.user
 	posts = Stream.objects.filter(user=user)
 	
-
 	group_ids = []
 
 	for post in posts:
