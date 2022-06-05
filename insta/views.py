@@ -12,7 +12,7 @@ from authe.models import Profile
 
 # Create your views here.
 @login_required
-def page(request):
+def index(request):
 	user = request.user
 	posts = Stream.objects.filter(user=user)
 
@@ -24,7 +24,7 @@ def page(request):
 		
 	post_items = Post.objects.filter(id__in=group_ids).all().order_by('-posted')		
 
-	template = loader.get_template('page.html')
+	template = loader.get_template('index.html')
 
 	context = {
 		'post_items': post_items,
@@ -104,7 +104,7 @@ def NewPost(request):
 			p.tags.set(tags_objs)
 			p.content.set(files_objs)
 			p.save()
-			return redirect('page')
+			return redirect('index')
 	else:
 		form = NewPostForm()
 

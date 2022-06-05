@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    # path('', page, name='page'),
+    path('', index, name='index'),
    	path('newpost/', NewPost, name='newpost'),
    	path('<uuid:post_id>', PostDetails, name='postdetails'),
    	path('<uuid:post_id>/like', like, name='postlike'),
