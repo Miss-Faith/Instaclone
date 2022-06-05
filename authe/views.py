@@ -72,7 +72,7 @@ def Signup(request):
 		'form':form,
 	}
 
-	return render(request, 'credentials/signup.html', context)
+	return render(request, 'users/signup.html', context)
 
 @login_required
 def follow(request, username, option):

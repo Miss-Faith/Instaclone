@@ -11,12 +11,11 @@ from django.urls import reverse
 from authe.models import Profile
 
 # Create your views here.
-
 def index(request):
 	user = request.user
 	posts = Stream.objects.filter(user=user)
+	
 
-	#stories = StoryStream.objects.filter(user=user)
 	group_ids = []
 
 	for post in posts:
@@ -28,11 +27,9 @@ def index(request):
 
 	context = {
 		'post_items': post_items,
-		#'stories': stories,
-
 	}
 
-	return HttpResponse(template.render(context, request))
+	return render(request, 'index.html', context)
 
 def PostDetails(request, post_id):
 	post = get_object_or_404(Post, id=post_id)
@@ -67,7 +64,6 @@ def PostDetails(request, post_id):
 
 	context = {
 		'post':post,
-		'favorited':favorited,
 		'profile':profile,
 		'form':form,
 		'comments':comments,
@@ -147,19 +143,5 @@ def like(request, post_id):
 
 	post.likes = current_likes
 	post.save()
-
-	return HttpResponseRedirect(reverse('postdetails', args=[post_id]))
-
-@login_required
-def favorite(request, post_id):
-	user = request.user
-	post = Post.objects.get(id=post_id)
-	profile = Profile.objects.get(user=user)
-
-	if profile.favorites.filter(id=post_id).exists():
-		profile.favorites.remove(post)
-
-	else:
-		profile.favorites.add(post)
 
 	return HttpResponseRedirect(reverse('postdetails', args=[post_id]))
