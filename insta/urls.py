@@ -1,12 +1,15 @@
 from django.urls import path
-from . import views
+from .views import *
 from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
- # path('',views.index, name='index'),
-  path('login/', views.login, name='login'),
-  path('signup/',views.signup, name='signup'),
+    path('', page, name='page'),
+   	path('newpost/', NewPost, name='newpost'),
+   	path('<uuid:post_id>', PostDetails, name='postdetails'),
+   	path('<uuid:post_id>/like', like, name='postlike'),
+   	path('<uuid:post_id>/favorite', favorite, name='postfavorite'),
+   	path('tag/<slug:tag_slug>', tags, name='tags'),
 ]
 
 if settings.DEBUG:
