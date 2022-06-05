@@ -5,8 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 
-from authy.models import Profile
-from post.models import Post, Follow, Stream
+from authe.models import Profile
 from django.db import transaction
 from django.template import loader
 from django.http import HttpResponse, HttpResponseRedirect
@@ -72,7 +71,7 @@ def Signup(request):
 		'form':form,
 	}
 
-	return render(request, 'signup.html', context)
+	return render(request, 'credentials/signup.html', context)
 
 @login_required
 def EditProfile(request):
