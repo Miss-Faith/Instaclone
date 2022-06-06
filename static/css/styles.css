@@ -33,7 +33,7 @@ body {
 
 .card {
   margin-bottom: 5%;
-  width: 70%;
+  width: 80%;
   margin-left: 10%;
 }
 
@@ -44,4 +44,13 @@ body {
 .rounded-circle {
   margin-top: 2%;
   margin-left: 2%;
+}
+
+.profile-user {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.card-profile {
+  width: 80vw;
 }

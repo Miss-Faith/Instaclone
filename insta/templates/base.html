@@ -59,26 +59,18 @@
               </span>
             </a>
 
-          <div class="collapse navbar-collapse" id="navbarNav" class="navbar-item">
-            <ul class="navbar-nav">
+          <div class="collapse navbar-collapse" id="navbarNav" class="navbar-item text-center">
+            <ul class="navbar-nav d-flex justify-content-center">
               <div class="dropdown show">
                 <a class="nav-link btn btn-dropdown dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="material-symbols-outlined">face</i></a>
                 <div class="dropdown-menu dropitems" aria-labelledby="dropdownMenuLink">
 
-                  <a class="dropdown-item" id="dropdownMenuLink">
-                    Settings
+                  <a href="{% url 'profile'%}" class="dropdown-item text-center" id="dropdownMenuLink">
+                    Profile
                   </a>
-                  <a class="dropdown-item" id="dropdownMenuLink">
-                    Change Password
-                  </a>
-                  <a class="dropdown-item" id="dropdownMenuLink">
-                    Contact
-                  </a>
-                  <a class="dropdown-item" id="dropdownMenuLink">
-                    Report an Issue
-                  </a>
+    
                   <hr class="navbar-divider">
-                  <a href="{% url 'login'%}">
+                  <a href="{% url 'login'%}" class="text-center dropdown-item">
                     Log out
                   </a>      
                 </div>
