@@ -18,6 +18,8 @@
       <a href="{{ post_item.get_absolute_url }}">
         <img src="{{ post_item.content.first.file.url }}" class="card-img-top card-index" alt="Image">
       </a>
+
+      
       <strong><a href="{% url 'postlike' post_item.id %}" class="card-item">
         <span class="material-symbols-outlined">
           favorite
@@ -37,10 +39,11 @@
       </strong> 
 
       <p> <strong> {{ post_item.user.username }}</strong> @{{ post_item.caption }}</p>
+      <p>View all {{ post_item.comments }} comments</p>
       <strong><small>{{ post_item.posted | naturaltime }}</small></strong>
 
       <div class="card-footer bg-white">
-        <input type="text">
+        <strong><a class="btn" href="{% url 'postlike' post_item.id %}">Comment</a>
       </div>
     </div>
   </div> 

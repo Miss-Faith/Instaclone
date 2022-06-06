@@ -49,14 +49,11 @@ def PostDetails(request, post_id):
 	user = request.user
 	profile = Profile.objects.get(user=user)
 
-	#comment
 	comments = Comment.objects.filter(post=post).order_by('date')
 	
 	if request.user.is_authenticated:
 		profile = Profile.objects.get(user=user)
 
-
-	#Comments Form
 	if request.method == 'POST':
 		form = CommentForm(request.POST)
 		if form.is_valid():
@@ -67,8 +64,6 @@ def PostDetails(request, post_id):
 			return HttpResponseRedirect(reverse('postdetails', args=[post_id]))
 	else:
 		form = CommentForm()
-
-
 	template = loader.get_template('post_detail.html')
 
 	context = {

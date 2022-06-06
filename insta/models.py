@@ -64,16 +64,16 @@ class Comment(models.Model):
 		post = comment.post
 		text_preview = comment.body[:90]
 		sender = comment.user
-		notify = Notification(post=post, sender=sender, user=post.user, text_preview=text_preview ,notification_type=2)
-		notify.save()
+		# notify = Notification(post=post, sender=sender, user=post.user, text_preview=text_preview ,notification_type=2)
+		# notify.save()
 
 	def user_del_comment_post(sender, instance, *args, **kwargs):
 		like = instance
 		post = like.post
 		sender = like.user
 
-		notify = Notification.objects.filter(post=post, sender=sender, notification_type=2)
-		notify.delete()
+		# notify = Notification.objects.filter(post=post, sender=sender, notification_type=2)
+		# notify.delete()
 
 #Comment
 post_save.connect(Comment.user_comment_post, sender=Comment)
@@ -153,16 +153,16 @@ class Likes(models.Model):
 		like = instance
 		post = like.post
 		sender = like.user
-		notify = Notification(post=post, sender=sender, user=post.user, notification_type=1)
-		notify.save()
+		# notify = Notification(post=post, sender=sender, user=post.user, notification_type=1)
+		# notify.save()
 
 	def user_unlike_post(sender, instance, *args, **kwargs):
 		like = instance
 		post = like.post
 		sender = like.user
 
-		notify = Notification.objects.filter(post=post, sender=sender, notification_type=1)
-		notify.delete()
+		# notify = Notification.objects.filter(post=post, sender=sender, notification_type=1)
+		# notify.delete()
 
 #Stream
 post_save.connect(Stream.add_post, sender=Post)
