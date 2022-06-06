@@ -6,6 +6,9 @@ from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
+from django.urls import resolve
+from django.core.paginator import Paginator
+
 # Create your views here.
 def signup(request):
 	if request.method == 'POST':
@@ -28,16 +31,16 @@ def signup(request):
 @login_required
 def index(request):
 	user = request.user
-	#posts = Stream.objects.filter(user=user)
+	posts = Stream.objects.filter(user=user)
 	
 	group_ids = []
-	# for post in posts:
-	# 	group_ids.append(post.post_id)
-	# post_items = Post.objects.filter(id__in=group_ids).all().order_by('-posted')		
-	# template = loader.get_template('index.html')
-	# context = {
-	# 	'post_items': post_items,
-	# }
+	for post in posts:
+		group_ids.append(post.post_id)
+	post_items = Post.objects.filter(id__in=group_ids).all().order_by('-posted')		
+	template = loader.get_template('index.html')
+	context = {
+		'post_items': post_items,
+	}
 
 	return render(request, 'index.html')
 
@@ -152,16 +155,12 @@ def like(request, post_id):
 
 	return HttpResponseRedirect(reverse('postdetails', args=[post_id]))
 
-def UserProfile(request, username):
-	user = get_object_or_404(User, username=username)
+def UserProfile(request):
+	user = request.user.id
 	profile = Profile.objects.get(user=user)
 	url_name = resolve(request.path).url_name
 	
-	if url_name == 'profile':
-		posts = Post.objects.filter(user=user).order_by('-posted')
-
-	else:
-		posts = profile.favorites.all()
+	posts = Post.objects.filter(user=user).order_by('-posted')
 
 	#Profile info box
 	posts_count = Post.objects.filter(user=user).count()

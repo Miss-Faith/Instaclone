@@ -57,7 +57,7 @@
   <p class="subtitle is-5">{% if profile.profile_info %}{{ profile.profile_info }}{% endif %}</p>
 
   {% if user.is_authenticated and user == profile.user %}
-    <a href="{% url 'edit-profile' %}" class="button">Edit profile</a>
+    <a href="#" class="button">Edit profile</a>
   {% endif %}
 
   </div>
@@ -72,12 +72,9 @@
   <div class="tabs is-centered">
     <ul>
       <li class="{% if url_name == 'profile' %}is-active{% endif %}">
-        <a href="{% url 'profile' profile.user %}"><i class="material-icons">dashboard</i>Posts</a>
+        <a href="{% url 'profile' %}"><i class="material-icons">dashboard</i>Posts</a>
       </li>
 
-      <li class="{% if url_name == 'profilefavorites' %}is-active{% endif %}">
-        <a href="{% url 'profilefavorites' profile.user %}"><i class="material-icons">save_alt</i>Saved</a>
-      </li>
     </ul>
   </div>
 
@@ -91,12 +88,7 @@
               <img src="{{ post.content.first.file.url }}" alt="Placeholder image">
             </a>
           </figure>
-          {% else %}
-          <a href="{{ post.get_absolute_url }}">
-            <video width="640" controls="controls" preload="metadata">
-              <source src="{{ post.content.first.file.url }}#t=0.5" type="video/mp4">        
-            </video>      
-          </a>
+
           {% endif %}
         </div>
       </div>

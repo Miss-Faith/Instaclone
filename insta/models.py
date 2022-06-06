@@ -4,7 +4,10 @@ from django.contrib.auth.models import User
 
 from django.db.models.signals import post_save, post_delete
 from django.utils.text import slugify
+from PIL import Image
+from django.conf import settings
 from django.urls import reverse
+import os
 
 
 # Create your models here.
@@ -94,6 +97,39 @@ class Follow(models.Model):
 
 		notify = Notification.objects.filter(sender=sender, user=following, notification_type=3)
 		notify.delete()
+
+class Profile(models.Model):
+	user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+	first_name = models.CharField(max_length=50, null=True, blank=True)
+	last_name = models.CharField(max_length=50, null=True, blank=True)
+	location = models.CharField(max_length=50, null=True, blank=True)
+	url = models.CharField(max_length=80, null=True, blank=True)
+	profile_info = models.TextField(max_length=150, null=True, blank=True)
+	created = models.DateField(auto_now_add=True)
+	picture = models.ImageField(upload_to='images/', blank=True, null=True, verbose_name='Picture')
+
+	def save(self):
+		super().save()
+		SIZE = 250, 250
+
+		if self.picture:
+			pic = Image.open(self.picture.path)
+			pic.thumbnail(SIZE, Image.LANCZOS)
+			pic.save(self.picture.path)
+
+	def __str__(self):
+		return self.user.username
+		
+
+def create_user_profile(sender, instance, created, **kwargs):
+	if created:
+		Profile.objects.create(user=instance)
+
+def save_user_profile(sender, instance, **kwargs):
+	instance.profile.save()
+
+post_save.connect(create_user_profile, sender=User)
+post_save.connect(save_user_profile, sender=User)
 
 class Stream(models.Model):
     following = models.ForeignKey(User, on_delete=models.CASCADE,null=True, related_name='stream_following')
