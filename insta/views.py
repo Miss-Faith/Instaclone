@@ -36,13 +36,13 @@ def index(request):
 	group_ids = []
 	for post in posts:
 		group_ids.append(post.post_id)
-	post_items = Post.objects.filter(id__in=group_ids).all().order_by('-posted')		
+	post_items = Post.objects.all().order_by('-posted')		
 	template = loader.get_template('index.html')
 	context = {
 		'post_items': post_items,
 	}
 
-	return render(request, 'index.html')
+	return HttpResponse(template.render(context, request))
 
 def PostDetails(request, post_id):
 	post = get_object_or_404(Post, id=post_id)
