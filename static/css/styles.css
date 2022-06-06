@@ -34,6 +34,7 @@ body {
 .card {
   margin-bottom: 5%;
   width: 70%;
+  margin-left: 10%;
 }
 
 .card-index {
