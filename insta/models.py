@@ -108,8 +108,8 @@ class Profile(models.Model):
 	created = models.DateField(auto_now_add=True)
 	picture = models.ImageField(upload_to='images/', blank=True, null=True, verbose_name='Picture')
 
-	def save(self):
-		super().save()
+	def save(self, *args, **kwargs):
+		super().save(*args, **kwargs)
 		SIZE = 250, 250
 
 		if self.picture:
