@@ -26,9 +26,9 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
           <img class="nav-img" src="{% static 'images/insta-icon.jpg'%}" alt="logo" width="auto" height="36">
 
-          <form class="nav-form" role="search" action="{% url 'search_results' %}">
+          <form class="nav-form d-flex" role="search" action="{% url 'search_results' %}">
             <input class="form-control bg-light rounded" type="search" placeholder="Search" aria-label="Search" name="profile">
-            <button class="btn btn-outline-primary " type="submit">Search</button>
+            <button class="btn btn-sm btn-outline-secondary bg-light" type="submit">Search</button>
           </form>
             <a href="{% url 'index' %}" class="navbar-item">
               <span class="material-symbols-outlined">
