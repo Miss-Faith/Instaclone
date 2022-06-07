@@ -11,6 +11,7 @@ urlpatterns = [
     path('accounts/login/',auth_views.LoginView.as_view(template_name='login.html'),name = 'login'),
     path('logout/',auth_views.LogoutView.as_view(template_name='logout.html'),name = 'logout'),
    	path('newpost/', NewPost, name='newpost'),
+		path('search/', search_results, name='search_results'),
    	path('<uuid:post_id>', PostDetails, name='postdetails'),
    	path('<uuid:post_id>/like', like, name='postlike'),
    	path('tag/<slug:tag_slug>', tags, name='tags'), 

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+  <div class="row text-center">
+    {% if profiles%}
+      <h2>Found {{ profiles|length }} user with searched term '{{message}}'</h2>
+    {% else %}
+      <h2> Found 0 profiles for the search term {{message}}</h2>
+    {% endif %}
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      {% if profiles %}
+      {% for profile in profiles %}
+      <div class="card">          
+        {% if profile.picture %}
+          <span><img class="rounded-circle" src="{{ profile.picture.url }}" style="width: 6rem; height: 6rem;"></span>
+        {% else %}
+          <span><img class="rounded-circle" src="{% static 'images/noimage.jpg'%}" alt="No Profile" style="width: 4rem; height: 4rem;"></span> 
+        {% endif %}
+        <div class="card-body">
+          <h2>{{ profile.user.username }}</h2>
+          <p>{{ profile.user.email }}</p>
+        </div>
+      </div><br>
+      {% endfor %}
+      </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

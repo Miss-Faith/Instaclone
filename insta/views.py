@@ -183,3 +183,14 @@ def UserProfile(request):
 	}
 
 	return HttpResponse(template.render(context, request))
+
+@login_required
+def search_results(request):
+    if 'profile' in request.GET and request.GET["profile"]:
+        search_term = request.GET.get("profile")
+        searched_profiles = Profile.search_profile(search_term)
+        message = f"{search_term}"
+        return render(request, 'search.html', {"message":message,"profiles": searched_profiles})
+    else:
+        message = "You haven't searched for any profile"
+    return render(request, 'search.html', {'message': message})

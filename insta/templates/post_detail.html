@@ -18,7 +18,7 @@
           {% if post.user.profile.picture %}
             <img src="{{ post.user.profile.picture.url }}" alt="Image">
           {% else %}
-            <img src="" alt="Image">
+            <img src="{% static 'images/noimage.jpg'%}" alt="No Image">
           {% endif %}
         </figure>
       </div>

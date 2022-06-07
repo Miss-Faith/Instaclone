@@ -117,6 +117,11 @@ class Profile(models.Model):
 			pic.thumbnail(SIZE, Image.LANCZOS)
 			pic.save(self.picture.path)
 
+	@classmethod
+	def search_profile(cls, search_term):
+			profs = cls.objects.filter(user__username__icontains=search_term)
+			return profs
+
 	def __str__(self):
 		return self.user.username
 		
