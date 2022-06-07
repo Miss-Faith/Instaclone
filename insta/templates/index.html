@@ -20,30 +20,28 @@
       </a>
 
       
-      <strong><a href="{% url 'postlike' post_item.id %}" class="card-item">
-        <span class="material-symbols-outlined">
-          favorite
-        </span>
+      <a href="{% url 'postlike' post_item.id %}" class="navbar-item">
+        <span class="material-symbols-outlined">favorite</span>
       </a>
-      <a href="#" class="card-item">
+      <a class="navbar-item">
         <span class="material-symbols-outlined">
           mode_comment
         </span>
       </a>
-      <a href="#" class="card-item">
+      <a class="navbar-item">
         <span class="material-symbols-outlined">
           send
         </span>
       </a>
-      <p>{{ post_item.likes }} likes</p>
-      </strong> 
+      <small><p>{{ post_item.likes }} likes</p></small>
+      
 
-      <p> <strong> {{ post_item.user.username }}</strong> @{{ post_item.caption }}</p>
-      <p><a class="" href="{% url 'postlike' post_item.id %}">View all comments</a></p>
-      <strong><small>{{ post_item.posted | naturaltime }}</small></strong>
+      <small><p> {{ post_item.user.username }} @{{ post_item.caption }}</p></small>
+      <small><p><a style="color: black;" href="{% url 'postlike' post_item.id %}">View all comments</a></p></small>
+      <small>{{ post_item.posted | naturaltime }}</small>
 
-      <div class="card-footer bg-white">
-        <strong><a class="btn" href="{% url 'postlike' post_item.id %}">Comment</a>
+      <div class="card-footer bg-white text-center">
+        <a class="btn" href="{% url 'postlike' post_item.id %}">Comment</a>
       </div>
     </div>
   </div> 
