@@ -67,7 +67,7 @@
   <div class="media-content">
     <div class="content">
       <p>
-        {% if comment.user.profile.first_name %}
+        {% if user.profile.first_name %}
           <strong>{{ comment.user.profile.first_name }} {{ comment.user.profile.last_name }}</strong><small> @{{ comment.user.username }}</small>
         {% else %}
           <strong>Unknown</strong>
