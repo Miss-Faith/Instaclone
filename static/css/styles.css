@@ -39,8 +39,12 @@ body {
 }
 
 .rounded-circle {
-  margin-top: 2%;
-  margin-left: 2%;
+  margin-top: 0.4%!important;
+  margin-left: 0.4%!important;
+  border-color: deeppink!important;
+  border-width: 1.2ch!important;
+  background-color: deeppink;
+  padding: 2px;
 }
 
 .profile-user {

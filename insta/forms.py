@@ -51,9 +51,9 @@ class SignupForm(forms.ModelForm):
     return self.cleaned_data
 
 class NewPostForm(forms.ModelForm):
-  content = forms.FileField(widget=forms.ClearableFileInput(attrs={'class': 'textarea','multiple': True}), required=False)
-  caption = forms.CharField(widget=forms.Textarea(attrs={'class': 'input is-medium'}), required=True)
-  tags = forms.CharField(widget=forms.TextInput(attrs={'class': 'input is-medium'}), required=True)
+  content = forms.FileField(label='',widget=forms.ClearableFileInput(attrs={'placeholder': 'Username','class': 'textarea','multiple': True}), required=True)
+  caption = forms.CharField(label='',widget=forms.Textarea(attrs={'placeholder': 'Caption','class': 'input is-medium'}), required=True)
+  tags = forms.CharField(label='',widget=forms.TextInput(attrs={'placeholder': 'Tag','class': 'input is-medium'}), required=True)
 
   class Meta:
     model = Post

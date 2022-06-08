@@ -4,16 +4,18 @@
 {% load humanize %}
 
 <br>
-  <div class="container-fluid">
+<div class="container-fluid">
   {% for post_item in post_items %}
   <div class="card">
-    {% if post_item.user.profile.picture %}
+    <div class="card-header bg-white">
+      {% if post_item.user.profile.picture %}
     <span><img class="rounded-circle" src="{{ post_item.user.profile.picture.url }}" alt="image" style="width: 4rem; height: 4rem;">
       {{ post_item.user.username }}</span>
     {% else %}
       <span><img class="rounded-circle" src="{% static 'images/noimage.jpg'%}" alt="No Profile" style="width: 4rem; height: 4rem;">
         {{ post_item.user.username }}</span>       
     {% endif %}
+    </div>
     <div class="card-body">
       <a href="{{ post_item.get_absolute_url }}">
         <img src="{{ post_item.content.first.file.url }}" class="card-img-top card-index" alt="Image">
@@ -38,7 +40,6 @@
       </a>
       <small><p>{{ post_item.likes }} likes</p></small>
       
-
       <small><p> {{ post_item.user.username }} @{{ post_item.caption }}</p></small>
       <small><p><a style="color: black;" href="{% url 'postdetails' post_item.id %}">View all comments</a></p></small>
       <small>{{ post_item.posted | naturaltime }}</small>
@@ -49,5 +50,5 @@
     </div>
   </div> 
   {% endfor %}   
-  </div>
+</div>
 {% endblock %}
