@@ -37,11 +37,11 @@
       
 
       <small><p> {{ post_item.user.username }} @{{ post_item.caption }}</p></small>
-      <small><p><a style="color: black;" href="{% url 'postlike' post_item.id %}">View all comments</a></p></small>
+      <small><p><a style="color: black;" href="{% url 'postdetails' post_item.id %}">View all comments</a></p></small>
       <small>{{ post_item.posted | naturaltime }}</small>
 
       <div class="card-footer bg-white text-center">
-        <a class="btn" href="{% url 'postlike' post_item.id %}">Comment</a>
+        <a class="btn" href="{% url 'postdetails' post_item.id %}">Comment</a>
       </div>
     </div>
   </div> 

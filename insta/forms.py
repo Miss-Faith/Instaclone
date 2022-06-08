@@ -60,7 +60,7 @@ class NewPostForm(forms.ModelForm):
     fields = ('content', 'caption', 'tags')
     
 class CommentForm(forms.ModelForm):
-  body = forms.CharField(widget=forms.Textarea(attrs={'class': 'textarea'}), required=True)
+  body = forms.CharField(label='',widget=forms.Textarea(attrs={'class': 'textarea'}), required=True)
 
   class Meta:
     model = Comment
