@@ -40,6 +40,7 @@ class PostFileContent(models.Model):
 
 class Post(models.Model):
 	id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+	name = models.CharField(max_length=50, null=True, blank=True)
 	content =  models.ManyToManyField(PostFileContent, related_name='contents')
 	caption = models.TextField(max_length=1500, verbose_name='Caption')
 	posted = models.DateTimeField(auto_now_add=True)
@@ -179,3 +180,7 @@ post_delete.connect(Likes.user_unlike_post, sender=Likes)
 #Follow
 post_save.connect(Follow.user_follow, sender=Follow)
 post_delete.connect(Follow.user_unfollow, sender=Follow)
+
+class Recipients(models.Model):
+    name = models.CharField(max_length = 30)
+    email = models.EmailField()

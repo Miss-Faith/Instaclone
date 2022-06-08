@@ -41,9 +41,9 @@
         {% if user.is_authenticated and user != post.user %}
         <div class="">
           {% if follow_status == True %}
-            <a href="{% url 'follow' post.user.username 0 %}" class="button is-danger">Unfollow</a>
+            <a href="{% url 'follow' post.user.username 0 %}" class="btn btn-outline-secondary">Unfollow</a>
           {% else %}
-            <a href="{% url 'follow' post.user.username 1 %}" class="button is-success">Follow</a>
+            <a href="{% url 'follow' post.user.username 1 %}" class="button btn-outline-primary">Follow</a>
           {% endif  %}
         </div>
         {% endif %}

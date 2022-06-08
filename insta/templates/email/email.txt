@@ -1,0 +1,3 @@
+Hello {{name}}
+
+Thanks for joining Instaclone. We hope ypu enjoy using our web app.
