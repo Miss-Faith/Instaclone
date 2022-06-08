@@ -87,16 +87,16 @@ class Follow(models.Model):
 		follow = instance
 		sender = follow.follower
 		following = follow.following
-		notify = Notification(sender=sender, user=following, notification_type=3)
-		notify.save()
+		# notify = Notification(sender=sender, user=following, notification_type=3)
+		# notify.save()
 
 	def user_unfollow(sender, instance, *args, **kwargs):
 		follow = instance
 		sender = follow.follower
 		following = follow.following
 
-		notify = Notification.objects.filter(sender=sender, user=following, notification_type=3)
-		notify.delete()
+		# notify = Notification.objects.filter(sender=sender, user=following, notification_type=3)
+		# notify.delete()
 
 class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')

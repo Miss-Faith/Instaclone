@@ -8,6 +8,7 @@ from django.urls import reverse
 
 from django.urls import resolve
 from django.core.paginator import Paginator
+from django.db import transaction
 
 # Create your views here.
 def signup(request):
@@ -49,6 +50,17 @@ def PostDetails(request, post_id):
 	user = request.user
 	profile = Profile.objects.get(user=user)
 
+	fuser = post.user
+	fprofile = Profile.objects.get(user=fuser)
+
+	#Profile info box
+	posts_count = Post.objects.filter(user=fuser).count()
+	following_count = Follow.objects.filter(follower=fuser).count()
+	followers_count = Follow.objects.filter(following=fuser).count()
+
+	#follow status
+	follow_status = Follow.objects.filter(following=fuser, follower=request.user).exists()
+
 	comments = Comment.objects.filter(post=post).order_by('date')
 	
 	if request.user.is_authenticated:
@@ -71,6 +83,9 @@ def PostDetails(request, post_id):
 		'profile':profile,
 		'form':form,
 		'comments':comments,
+		'following_count':following_count,
+		'followers_count':followers_count,
+		'follow_status':follow_status,
 	}
 
 	return HttpResponse(template.render(context, request))
@@ -151,7 +166,7 @@ def like(request, post_id):
 	return HttpResponseRedirect(reverse('index'))
 
 def UserProfile(request):
-	user = request.user.id
+	user = request.user
 	profile = Profile.objects.get(user=user)
 	url_name = resolve(request.path).url_name
 	
@@ -213,6 +228,37 @@ def follow(request, username, option):
 			 		stream = Stream(post=post, user=request.user, date=post.posted, following=following)
 			 		stream.save()
 
-		return HttpResponseRedirect(reverse('profile', args=[username]))
+		return HttpResponseRedirect(reverse('profile'))
 	except User.DoesNotExist:
-		return HttpResponseRedirect(reverse('profile', args=[username]))
+		return HttpResponseRedirect(reverse('profile'))
+
+def UserProfileFollow(request, username):
+	user = get_object_or_404(User, username=username)
+	profile = Profile.objects.get(user=user)
+	
+	posts = profile.favorites.all()
+
+	#Profile info box
+	posts_count = Post.objects.filter(user=user).count()
+	following_count = Follow.objects.filter(follower=user).count()
+	followers_count = Follow.objects.filter(following=user).count()
+
+	#Pagination
+	paginator = Paginator(posts, 8)
+	page_number = request.GET.get('page')
+	posts_paginator = paginator.get_page(page_number)
+
+	template = loader.get_template('profile_follow.html')
+
+	context = {
+		'posts': posts_paginator,
+		'profile':profile,
+		'following_count':following_count,
+		'followers_count':followers_count,
+		'posts_count':posts_count,
+	}
+
+	#if request.method == 'POST':
+	#return HttpResponseRedirect(reverse('profilefollow', args=[username]))
+
+	return HttpResponse(template.render(context, request))

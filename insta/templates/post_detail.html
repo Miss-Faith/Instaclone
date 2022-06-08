@@ -5,43 +5,60 @@
 {% block content %}
   <br>
 <div class="card">
-  <div class="card-content">
-    <div class="media">
+  <div class="media">
 
-      <div class="media-left">
-        <div class="">
-          {% if post.user.profile.picture %}
-            <img src="{{ post.user.profile.picture.url }}" alt="Image">
-          {% else %}
-            <img src="{% static 'images/noimage.jpg'%}" alt="Image">
-          {% endif %}
-        </div>
+    <div class="media-left">
+      <div class="">
+        {% if post.user.profile.picture %}
+          <img class="rounded-circle" src="{{ post.user.profile.picture.url }}" alt="Image" style="width: 4rem; height: 4rem;">
+        {% else %}
+          <img class="rounded-circle" src="{% static 'images/noimage.jpg'%}" alt="Image" style="width: 4rem; height: 4rem;">
+        {% endif %}
+        {% if post.user.profile.first_name %}
+          <span class="">{{ post.user.profile.first_name }} {{ post.user.profile.last_name }}</span>
+        {% else %}
+          <span class="">Unknown</span>
+        {% endif %}
       </div>
 
-      <div class="media-content">
-        {% if post.user.profile.first_name %}
-          <p class="">{{ post.user.profile.first_name }} {{ post.user.profile.last_name }}</p>
-        {% else %}
-          <p class="">Unknown</p>
-        {% endif %}
+      <div class="card-body">
+        <img src="{{ post.content.first.file.url }}" class="card-img-top card-index" alt="Image" style="width: 20rem;">
+      </div>
+    </div>
+
+      <div class="media-content" style="margin: auto;">
         <p class="">@{{ post.user.username }}</p>
 
         {{ post.caption }}
         <span>{% for tag in post.tags.all %}<a href="{{ tag.get_absolute_url }}">#{{ tag }}</a>{% endfor %}</span>
         <br>
-        <strong><small><p style="margin-top: 20px;">{{ post.posted }}</p></small></strong>
+        <strong><small><p style="margin-top: 10px;">{{ post.posted }}</p></small></strong>
 
       </div>
 
-    <div class="media-right">
-      <a href="{% url 'postlike' post.id %}"><i class="material-icons has-text-danger">favorite</i></a>
-      <p>{{ post.likes }} Likes</p>  
+    <div class="media-content" style="margin: auto;">
+      <div class="card-body">
+        {% if user.is_authenticated and user != post.user %}
+        <div class="">
+          {% if follow_status == True %}
+            <a href="{% url 'follow' post.user.username 0 %}" class="button is-danger">Unfollow</a>
+          {% else %}
+            <a href="{% url 'follow' post.user.username 1 %}" class="button is-success">Follow</a>
+          {% endif  %}
+        </div>
+        {% endif %}
+        <span class="heading">{{ following_count }} Following</span>
+        <span class="heading">{{ followers_count }} Followers</span>
+      </div> 
+      <div class="card-body">
+        <a href="{% url 'postlike' post.id %}"><i class="material-icons has-text-danger">favorite</i></a>
+      <p>{{ post.likes }} Likes</p> 
+      </div> 
     </div>
     
 
     </div>
 
-  </div>
 </div>
 
 <div class="card-content">
@@ -57,6 +74,7 @@
       {% endif %}
     </div>
   </figure>
+  
 
   <div class="media-content">
     <div class="content">
@@ -78,7 +96,7 @@
   </div>
 
 
-  <div class="media">
+  <div class="media d-flex justify-content-center">
     <div class="media-left">
         {% if comment.user.profile.picture %}
           <img class="rounded-circle" src="{{ comment.user.profile.picture.url }}" alt="Image" style="width: 4rem; height: 4rem;">

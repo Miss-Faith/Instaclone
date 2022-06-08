@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+  <br>
+  <div class="row">
+    <div class="col-3">
+      {% if profile.picture %}
+        <span><img class="rounded-circle" src="{{ profile.picture.url }}" style="width: 6rem; height: 6rem;"></span>
+      {% else %}
+      <span><img class="rounded-circle" src="{% static 'images/noimage.jpg'%}" alt="No Profile" style="width: 4rem; height: 4rem;"></span> 
+      {% endif %}
+      <p class="">{% if profile.profile_info %}{{ profile.profile_info }}{% endif %}</p>
+    </div>
+
+    <div class="col-5">
+      <span class="profile-user"> @{{ profile.user }}</span>
+
+      {% if user.is_authenticated and user == profile.user %}
+      <span href="#" class="btn">Edit profile</span>
+      {% endif %}
+
+      {% if user.is_authenticated and user != profile.user %}
+      <div class="">
+        {% if follow_status == True %}
+          <p href="{% url 'follow' profile.user 0 %}" class="button is-danger">Unfollow</p>
+        {% else %}
+          <p href="{% url 'follow' profile.user 1 %}" class="button is-success">Follow</p>
+        {% endif  %}
+      </div>
+      {% endif %}
+      <p>
+        <span class="heading">{{ posts_count }} Posts</span>
+        <span class="heading">{{ following_count }} Following</span>
+        <span class="heading">{{ followers_count }} Followers</span>
+      </p>
+      <h3 style="font-weight: bold;" class="title is-1">{% if profile.first_name %}{{ profile.first_name }} {{ profile.last_name }} {% endif %}</h3>
+    </div>
+  </div>
+  <br>
+
+  <div class="row">
+    <div class="text-center">
+      <ul>
+        <ol class="{% if url_name == 'profile' %}is-active{% endif %}">
+          <a class="navbar-item" href="{% url 'profile' %}"><i class="material-icons">dashboard</i>Posts</a>
+        </ol>
+      </ul>
+    </div>
+
+    {% for post in posts %}
+    <div class="col-4 card border-0">
+      {% if post.content.first.file.name|slice:"-3:" == 'jpg' or post_item.content.first.file.name|slice:"-3:" == 'png' %}
+        <a href="{{ post.get_absolute_url }}">
+          <img src="{{ post.content.first.file.url }}" alt="Image" class="card-img-top">
+        </a>
+      {% endif %}
+    </div>  
+      {% empty %}
+      <br>
+      <div>
+        <h3 class="col-10">You do not have any post!</h3>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
