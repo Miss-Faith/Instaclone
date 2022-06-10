@@ -89,9 +89,9 @@ WSGI_APPLICATION = 'instaclone.wsgi.application'
 
 #cloudinary settings
 cloudinary.config( 
-  cloud_name = config('CLOUD_NAME'), 
-  api_key = ('API_KEY'), 
-  api_secret = ('API-SECRET') 
+  cloud_name = "dlrnjcn1a", 
+  api_key = "968178658477246", 
+  api_secret = "AgXPLg-tkuLFq6YxH6I_n66_S64" 
 )
 
 # Database
