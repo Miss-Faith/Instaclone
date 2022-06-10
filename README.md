@@ -7,8 +7,19 @@ A web-app that allows a user to register an account. A user can the post photos,
 ### Setup Requirements
 
 ## TM
-User-Admin: Faith-K
-Password: 12345
+*User-Admin: Faith-K
+*Password: 12345
+
+##Working Features:
+###Home Page
+####Navbar
+*Home
+*Post
+####Posts
+*Like
+*Follow - Will redirect to PostDetails page. Follow Button on PostDetails page
+*Comment -  Will redirect to PostDetails page. Follow Comment on PostDetails page
+*view all comments - Will redirect to PostDetails page. view all comments on PostDetails page
 
 ##Developer
 ## Prerequisites
