@@ -15,6 +15,9 @@ import os
 import django_heroku
 import dj_database_url
 from decouple import config,Csv
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -50,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'crispy_forms',
     'bootstrap4',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -83,6 +87,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'instaclone.wsgi.application'
 
+#cloudinary settings
+cloudinary.config( 
+  cloud_name = "dlrnjcn1a", 
+  api_key = "968178658477246", 
+  api_secret = "AgXPLg-tkuLFq6YxH6I_n66_S64" 
+)
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
