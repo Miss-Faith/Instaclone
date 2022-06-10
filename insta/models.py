@@ -8,6 +8,7 @@ from PIL import Image
 from django.conf import settings
 from django.urls import reverse
 import os
+from cloudinary.models import CloudinaryField
 
 
 # Create your models here.
@@ -36,7 +37,7 @@ class Tag(models.Model):
 
 class PostFileContent(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='content_owner')
-	file = models.FileField(upload_to=user_directory_path)
+	file = CloudinaryField('file')
 
 class Post(models.Model):
 	id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
