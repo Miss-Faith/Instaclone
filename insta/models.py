@@ -66,16 +66,13 @@ class Comment(models.Model):
 		post = comment.post
 		text_preview = comment.body[:90]
 		sender = comment.user
-		# notify = Notification(post=post, sender=sender, user=post.user, text_preview=text_preview ,notification_type=2)
-		# notify.save()
+
 
 	def user_del_comment_post(sender, instance, *args, **kwargs):
 		like = instance
 		post = like.post
 		sender = like.user
 
-		# notify = Notification.objects.filter(post=post, sender=sender, notification_type=2)
-		# notify.delete()
 
 #Comment
 post_save.connect(Comment.user_comment_post, sender=Comment)
@@ -89,16 +86,13 @@ class Follow(models.Model):
 		follow = instance
 		sender = follow.follower
 		following = follow.following
-		# notify = Notification(sender=sender, user=following, notification_type=3)
-		# notify.save()
+
 
 	def user_unfollow(sender, instance, *args, **kwargs):
 		follow = instance
 		sender = follow.follower
 		following = follow.following
 
-		# notify = Notification.objects.filter(sender=sender, user=following, notification_type=3)
-		# notify.delete()
 
 class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
@@ -160,16 +154,12 @@ class Likes(models.Model):
 		like = instance
 		post = like.post
 		sender = like.user
-		# notify = Notification(post=post, sender=sender, user=post.user, notification_type=1)
-		# notify.save()
+
 
 	def user_unlike_post(sender, instance, *args, **kwargs):
 		like = instance
 		post = like.post
 		sender = like.user
-
-		# notify = Notification.objects.filter(post=post, sender=sender, notification_type=1)
-		# notify.delete()
 
 #Stream
 post_save.connect(Stream.add_post, sender=Post)
