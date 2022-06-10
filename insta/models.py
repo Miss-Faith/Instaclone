@@ -102,7 +102,7 @@ class Profile(models.Model):
 	url = models.CharField(max_length=80, null=True, blank=True)
 	profile_info = models.TextField(max_length=150, null=True, blank=True)
 	created = models.DateField(auto_now_add=True)
-	picture = models.ImageField(upload_to='images/', blank=True, null=True, verbose_name='Picture')
+	picture = CloudinaryField('Picture')
 
 	def save(self, *args, **kwargs):
 		super().save(*args, **kwargs)
