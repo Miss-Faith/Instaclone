@@ -108,6 +108,7 @@ To run test cases:
 ### Other resources
 * [Google Fonts](https://fonts.google.com/)
 * [Google Icons](https://fonts.google.com/)
+* Cloudinary
 
 ## Development
 ### Want to contribute? Great!
