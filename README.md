@@ -15,6 +15,7 @@ A web-app that allows a user to register an account. A user can the post photos,
 ####Navbar
 *Home
 *Post
+*Profile - View profile and Logout features
 ####Posts
 *Like
 *Follow - Will redirect to PostDetails page. Follow Button on PostDetails page
